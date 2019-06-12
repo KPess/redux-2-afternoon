@@ -9,7 +9,7 @@ import Nav from './../shared/Nav';
 import './Budget.css';
 import {connect} from 'react-redux'
 import {requestUserData} from '../../redux/userReducer'
-import {requestBudgetData} from '../../redux/budgetReducer'
+import {requestBudgetData, addPurchase, removePurchase} from '../../redux/budgetReducer'
 
 
 class Budget extends Component {
@@ -19,7 +19,7 @@ class Budget extends Component {
   }
 
   render() {
-    const {loading} = this.props
+    const {loading, addPurchase, removePurchase} = this.props
     const {purchases, budgetLimit} = this.props.budget
     const {firstName, lastName} = this.props.user
     return (
@@ -29,8 +29,8 @@ class Budget extends Component {
           <Nav firstName={firstName} lastName={lastName}/>
           <div className='content-container'>
             <div className="purchases-container">
-              <AddPurchase />
-              <DisplayPurchases purchases={purchases}/>
+              <AddPurchase addPurchase={addPurchase}/>
+              <DisplayPurchases purchases={purchases} removePurchase={removePurchase}/>
             </div>
             <div className='chart-container'>
               <Chart1 purchases={purchases} budgetLimit={budgetLimit}/>
@@ -49,4 +49,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, {requestUserData, requestBudgetData})(Budget);
+export default connect(mapStateToProps, {requestUserData, requestBudgetData, addPurchase, removePurchase})(Budget);
